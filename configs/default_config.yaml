@@ -1,0 +1,165 @@
+# Default configuration for ECoG GAN training
+# This file contains all the hyperparameters and settings for training the model
+
+# Model architecture configuration
+model:
+  generator:
+    latent_dim: 128              # Dimension of the latent (noise) vector
+    out_channels: 64            # Base number of channels in generator layers
+    use_attention: false         # Whether to use spatial attention in generator
+    attention_config:
+      num_heads: 4               # Number of attention heads
+      dropout: 0.1               # Dropout rate in attention layers
+  
+  critic:
+    time_window: 0.5             # Duration of each window in seconds
+    embedding_dim: 64            # Dimension of window embeddings
+    max_window_nums: 20          # Maximum number of windows for positional encoding
+    use_PE: false                 # Whether to use positional encoding
+    attention_config:
+      num_heads: 4               # Number of attention heads in critic
+      dropout: 0.1               # Dropout rate in attention layers
+
+# Data configuration
+data:
+  seq_len: 1536                  # Sequence length (3 seconds at 512 Hz)
+  sampling_rate: 512             # Sampling rate in Hz
+  batch_size: 64                 # Batch size for training
+  shuffle: true                  # Whether to shuffle training data
+  num_workers: 0                 # Number of data loading workers
+  generation_number: 1060        # Number of samples to generate
+  
+  # Data preprocessing settings
+  preprocessing:
+    normalization:
+      apply_normalization: false   # Whether to apply normalization
+      method: "zscore"           # Normalization method: zscore, minmax, robust, global
+      axis: null                 # Axis for normalization (null for global)
+    
+    resampling:
+      apply_resampling: false    # Whether to apply resampling
+      original_fs: 512           # Original sampling frequency in Hz
+      target_fs: 512             # Target sampling frequency in Hz (same as original by default)
+      method: "scipy"            # Resampling method: scipy, decimate
+    
+    filtering:
+      apply_filtering: false     # Whether to apply filtering
+      sampling_rate: 512         # Sampling rate for filtering operations
+      notch_freq: 50            # Notch filter frequency (Hz)
+      quality_factor: 30        # Quality factor for notch filter
+      bandpass: [1, 100]        # Bandpass filter range [low, high] Hz
+    
+    augmentation:
+      apply_augmentation: false  # Whether to apply data augmentation
+      noise_level: 0.01         # Gaussian noise level
+      time_shift: 10            # Maximum time shift in samples
+
+# Training configuration
+training:
+  num_epochs: 10               # Number of training epochs
+  critic_iterations: 5          # Number of critic updates per generator update
+  checkpoint_frequency: 50      # Save checkpoint every N epochs
+  
+  # Early stopping (optional)
+  early_stopping:
+    enabled: false              # Whether to use early stopping
+    patience: 20                # Number of epochs to wait for improvement
+    min_delta: 0.001           # Minimum change to qualify as improvement
+
+# Optimizer configuration
+optimizer:
+  generator:
+    type: "adam"                # Optimizer type
+    lr: 0.0002                  # Learning rate
+    betas: [0.5, 0.999]        # Adam beta parameters
+    weight_decay: 0.0          # Weight decay (L2 regularization)
+  
+  critic:
+    type: "adam"                # Optimizer type
+    lr: 0.0002                  # Learning rate
+    betas: [0.5, 0.999]        # Adam beta parameters
+    weight_decay: 0.0          # Weight decay (L2 regularization)
+
+# Learning rate scheduler configuration
+scheduler:
+  use_scheduler: true           # Whether to use learning rate scheduling
+  type: "step"                  # Scheduler type: step, exponential, cosine
+  step_size: 100               # Step size for StepLR
+  gamma: 0.9                   # Multiplicative factor for learning rate decay
+  
+  # For exponential scheduler
+  gamma_exp: 0.95              # Gamma for exponential decay
+  
+  # For cosine scheduler
+  T_max: 100                   # Maximum number of iterations for cosine
+
+# Loss function configuration
+loss:
+  type: "wgan_gp"              # Loss type: wgan_gp, adversarial
+  lambda_gp: 10.0              # Gradient penalty coefficient
+  
+  # Additional loss components
+  use_feature_matching: false   # Whether to use feature matching loss
+  feature_matching_weight: 1.0  # Weight for feature matching loss
+  
+  use_spectral_loss: false     # Whether to use spectral loss
+  spectral_loss_weight: 1.0    # Weight for spectral loss
+  
+  # For adversarial loss
+  adversarial_type: "bce"      # Type of adversarial loss: bce, mse, hinge
+
+# Monitoring and logging configuration
+monitoring:
+  output_dir: "./outputs"       # Directory to save outputs
+  save_frequency: 10           # Save monitoring data every N epochs
+  log_level: "INFO"            # Logging level: DEBUG, INFO, WARNING, ERROR
+  
+  # Visualization settings
+  plot_frequency: 10           # Generate plots every N epochs
+  save_samples: true           # Whether to save sample generations
+  sample_frequency: 25         # Save samples every N epochs
+  num_samples_to_save: 100     # Number of samples to save
+
+# Device and performance configuration
+device:
+  gpu_id: 0                    # GPU ID to use (null for auto-detection)
+  memory_fraction: 0.9         # Fraction of GPU memory to use
+  mixed_precision: false       # Whether to use mixed precision training
+  
+  # Performance optimizations
+  compile_model: false         # Whether to compile model (PyTorch 2.0+)
+  channels_last: false         # Whether to use channels_last memory format
+
+# Evaluation configuration
+evaluation:
+  metrics:
+    - "fid"                    # Frechet Inception Distance
+    - "is"                     # Inception Score
+    - "spectral_similarity"    # Spectral similarity metrics
+    - "correlation"            # Correlation analysis
+  
+  # Generation settings for evaluation
+  num_samples: 1000            # Number of samples to generate for evaluation
+  eval_frequency: 50           # Evaluate every N epochs
+
+# Experiment tracking (optional)
+experiment:
+  name: "ecog_gan_experiment"  # Experiment name
+  tags: ["ecog", "gan", "attention"]  # Tags for experiment
+  notes: "Default configuration for ECoG GAN training"
+  
+  # Weights & Biases integration (optional)
+  wandb:
+    enabled: false             # Whether to use Weights & Biases
+    project: "ecog-gan"        # W&B project name
+    entity: null               # W&B entity (username/team)
+
+# Data paths (to be overridden)
+paths:
+  data_path: null              # Path to training data
+  output_dir: "./outputs"      # Base output directory
+  checkpoint_dir: null         # Checkpoint directory (auto-generated if null)
+  
+# Reproducibility
+random_seed: 42                # Random seed for reproducibility
+deterministic: false          # Whether to use deterministic algorithms
