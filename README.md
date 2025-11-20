@@ -250,16 +250,3 @@ If you use this code in your research, please cite:
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Contact
-
-- **Author**: Nianfei Ao
-- **Email**: n.ao@campus.fct.unl.pt
-- **Project**: Multichannel ECoG GAN
-
-## Acknowledgments
-
-- PyTorch team for the excellent deep learning framework
-- The epilepsy surgery and neuroscience community for iEEG data and research
-- Contributors and users of this project
-- Medical professionals working on epilepsy surgery planning
