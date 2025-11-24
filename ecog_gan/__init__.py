@@ -10,7 +10,7 @@ __author__ = "Nianfei Ao"
 __email__ = "a553379103@gmail.com"
 
 from .models import Generator, WindowCritic
-from .data import ECoGDataLoader
+from .load_data import ECoGDataLoader
 from .training import Trainer
 from .utils import load_config, setup_device
 
