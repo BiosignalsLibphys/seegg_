@@ -1,6 +1,6 @@
-# Attention-Guided iEEG Synthesis With DCWGAN-GP
+# Attention-guided EEG synthesis with DCWGAN-GP
 
-A PyTorch implementation of the DCWGAN-GP (Deep Convolutional Wasserstein GAN with Gradient Penalty) for generating synthetic intracranial EEG (iEEG/ECoG) signals with attention mechanisms, as described in "Attention-Guided iEEG Synthesis With DCWGAN-GP for Enhanced Epilepsy Surgery Planning" .
+A PyTorch implementation of the DCWGAN-GP (Deep Convolutional Wasserstein GAN with Gradient Penalty) for generating synthetic EEG signals with attention mechanisms, as described in "Attention-guided iEEG synthesis With DCWGAN-GP for enhanced epilepsy surgery planning" .
 
 ## Overview
 
