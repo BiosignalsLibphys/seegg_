@@ -1,25 +1,22 @@
 # Attention-guided EEG synthesis with DCWGAN-GP
 
-A PyTorch implementation of the DCWGAN-GP (Deep Convolutional Wasserstein GAN with Gradient Penalty) for generating synthetic EEG signals with attention mechanisms, as described in "Attention-guided iEEG synthesis With DCWGAN-GP for enhanced epilepsy surgery planning" .
+A PyTorch implementation of the DCWGAN-GP (Deep Convolutional Wasserstein GAN with Gradient Penalty) with attention mechanisms for generating synthetic multichannel EEG signals.
 
 ## Overview
 
-This project implements the DCWGAN-GP architecture specifically designed for iEEG/ECoG signal generation for epilepsy surgery planning, featuring:
+This project implements the DCWGAN-GP architecture specifically designed for multi-channel EEG signal generation. 
 
 - **Generator**: Deep convolutional architecture with attention-guided synthesis
 - **Critic**: Wasserstein GAN critic with gradient penalty for stable training
 - **Attention Mechanisms**: Spatio-temporal attention for capturing brain signal patterns
 - **DCWGAN-GP Training**: Wasserstein GAN with gradient penalty for enhanced stability
-- **Epilepsy Focus**: Optimized for generating realistic iEEG signals for surgical planning
+  
 
 ## Features
 
-- 🧠 **iEEG-Specific Architecture**: Designed specifically for intracranial EEG signal generation for epilepsy surgery planning
-- 🎯 **Attention-Guided Synthesis**: Advanced spatio-temporal attention mechanisms for realistic brain signal generation
-- ⚡ **DCWGAN-GP Framework**: Wasserstein GAN with gradient penalty for stable and high-quality synthesis
-- 📊 **Comprehensive Monitoring**: Real-time training monitoring with plots and metrics
-- 🔧 **Medical Data Processing**: Built-in preprocessing optimized for clinical iEEG data
-- 🚀 **GPU Acceleration**: Optimized for CUDA-enabled training on medical datasets
+- Synthetic EEG generator (20 channels)
+- Temporal and spatial correlation metrics
+- Explainable AI metrics
 
 ## Installation
 
@@ -29,7 +26,7 @@ This project implements the DCWGAN-GP architecture specifically designed for iEE
 - CUDA-capable GPU (recommended)
 - 8GB+ RAM
 
-### Quick Install
+### Quick install
 
 1. Clone the repository:
 ```bash
@@ -47,19 +44,9 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-### Manual Installation
-
-If you prefer to install dependencies manually:
-
-```bash
-pip install torch torchvision torchaudio
-pip install numpy pandas scipy matplotlib seaborn
-pip install pyyaml scikit-learn
-```
-
 ## Quick Start
 
-### Basic Training
+### Usage
 
 1. **Prepare your data**: Place your iEEG/ECoG data in pickle format with shape `(samples, channels, time_points)`
 
@@ -68,12 +55,14 @@ pip install pyyaml scikit-learn
 python training_sample.py
 ```
 
+See our usage_example tutorial.
+
 3. **Monitor training**: Check the output directory for:
    - Loss plots (`plots/losses_epoch_*.png`)
    - Gradient norm plots (`plots/gradient_norms_epoch_*.png`)
    - Generated samples (`generated_data/synthetic_samples.pkl`)
 
-### Custom Training
+### Usage example
 
 ```python
 from ecog_gan import Generator, WindowCritic, ECoGDataLoader, Trainer, load_config
@@ -115,7 +104,7 @@ trainer.train(data_loader.get_dataloader(), num_epochs=100)
 
 The training process is highly configurable through YAML files. Key configuration sections:
 
-### Model Architecture
+### Model architecture
 ```yaml
 model:
   generator:
@@ -128,7 +117,7 @@ model:
     use_PE: true
 ```
 
-### Training Parameters
+### Training parameters
 ```yaml
 training:
   num_epochs: 100
@@ -136,7 +125,7 @@ training:
   checkpoint_frequency: 50
 ```
 
-### Data Processing
+### Data processing
 ```yaml
 data:
   seq_len: 1536
@@ -150,7 +139,7 @@ data:
       bandpass: [1, 100]
 ```
 
-## Data Format
+## Input data
 
 The system expects iEEG/ECoG data in the following format:
 
@@ -168,27 +157,27 @@ Example data structure:
 }
 ```
 
-## Architecture Details
+## Architecture
 
 ### Generator
 - **Input**: Latent vector (128D by default)
 - **Architecture**: Transposed convolutions with upsampling
 - **Attention**: Optional spatial attention with multiple variants
-- **Output**: Synthetic iEEG signals for epilepsy surgery planning
+- **Output**: Synthetic EEG signals
 
-### WindowCritic
+### Critic
 - **Input**: Real or synthetic iEEG signals
 - **Architecture**: Window-based processing with attention
 - **Attention**: Temporal and spatial attention mechanisms
 - **Output**: Realism score for each window
 
-### Attention Mechanisms
+### Attention mechanisms
 - **Spatial Attention**: Captures channel-wise relationships
 - **Temporal Attention**: Models time-dependent patterns
 - **Positional Encoding**: Learned position embeddings
 - **Conditional Attention**: Context-aware attention
 
-## Monitoring and Visualization
+## Monitoring and visualization
 
 The training process includes comprehensive monitoring:
 
@@ -197,17 +186,15 @@ The training process includes comprehensive monitoring:
 - **Learning Rate Scheduling**: LR decay visualization
 - **Sample Generation**: Periodic synthetic sample generation
 - **Model Checkpoints**: Automatic model saving
+- **Explainable AI methods**: Saliency maps
 
-## Performance Tips
+## Performance tips
 
 1. **GPU Memory**: Adjust batch size based on available GPU memory
-2. **Data Loading**: Use multiple workers for faster data loading
-3. **Mixed Precision**: Enable for faster training on modern GPUs
-4. **Gradient Clipping**: Tune gradient penalty weight for stability
 
 ## Troubleshooting
 
-### Common Issues
+### Common issues
 
 1. **CUDA Out of Memory**:
    - Reduce batch size
@@ -224,27 +211,21 @@ The training process includes comprehensive monitoring:
    - Verify file paths in configuration
    - Ensure proper data preprocessing
 
-## Contributing
-
-Contributions are welcome! Please:
-
-1. Fork the repository
-2. Create a feature branch
-3. Add tests for new functionality
-4. Submit a pull request
-
 ## Citation
 
 If you use this code in your research, please cite:
 
 ```bibtex
-@article{ao2024attention,
-  title={Attention-Guided iEEG Synthesis With DCWGAN-GP for Enhanced Epilepsy Surgery Planning},
-  author={},
-  journal={},
-  year={2025},
-  publisher={}
+@software{seegg2025,
+  title        = {seegg: synthetic EEG generator},
+  author       = {Marques, Beatriz and Silveira, Inês and Ao, Nianfei and Silva, Luís and Gamboa, Hugo.},
+  year         = {2025},
+  url          = {https://github.com/BiosignalsLibphys/seege_},
+  version      = {0.1.0},
+  note         = {License: MIT}
 }
+
+
 ```
 
 ## License
