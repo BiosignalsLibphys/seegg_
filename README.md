@@ -2,7 +2,7 @@
 
 A PyTorch implementation of the DCWGAN-GP (Deep Convolutional Wasserstein GAN with Gradient Penalty) with attention mechanisms for generating synthetic multichannel EEG signals.
 
-### Overview
+## Overview
 
 This project implements the DCWGAN-GP architecture specifically designed for multi-channel EEG signal generation. 
 
@@ -12,13 +12,14 @@ This project implements the DCWGAN-GP architecture specifically designed for mul
 - **DCWGAN-GP training**: Wasserstein GAN with gradient penalty for enhanced stability
   
 
-### Features
+## Features
 
+- Test EEG dataset (real and synthetic)
 - Synthetic EEG generator (20 channels)
 - Temporal and spatial correlation metrics
 - Explainable AI metrics
 
-### Installation
+## Installation
 
 Prerequisites
 
@@ -44,7 +45,7 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-### Usage
+## Usage
 
 1. **Prepare your data**: Place your iEEG/ECoG data in pickle format with shape `(samples, channels, time_points)`
 
@@ -60,7 +61,7 @@ See our usage_example tutorial.
    - Gradient norm plots (`plots/gradient_norms_epoch_*.png`)
    - Generated samples (`generated_data/synthetic_samples.pkl`)
 
-### Usage example
+Usage example
 
 ```python
 from ecog_gan import Generator, WindowCritic, ECoGDataLoader, Trainer, load_config
@@ -209,7 +210,7 @@ Common issues
    - Verify file paths in configuration
    - Ensure proper data preprocessing
 
-### Citation
+## Citation
 
 If you use this code in your research, please cite:
 
@@ -226,6 +227,6 @@ If you use this code in your research, please cite:
 
 ```
 
-### License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
