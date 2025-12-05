@@ -1,32 +1,32 @@
-# Attention-guided EEG synthesis with DCWGAN-GP
+## Attention-guided EEG synthesis with DCWGAN-GP
 
 A PyTorch implementation of the DCWGAN-GP (Deep Convolutional Wasserstein GAN with Gradient Penalty) with attention mechanisms for generating synthetic multichannel EEG signals.
 
-## Overview
+### Overview
 
 This project implements the DCWGAN-GP architecture specifically designed for multi-channel EEG signal generation. 
 
 - **Generator**: Deep convolutional architecture with attention-guided synthesis
 - **Critic**: Wasserstein GAN critic with gradient penalty for stable training
-- **Attention Mechanisms**: Spatio-temporal attention for capturing brain signal patterns
-- **DCWGAN-GP Training**: Wasserstein GAN with gradient penalty for enhanced stability
+- **Attention mechanisms**: Spatio-temporal attention for capturing brain signal patterns
+- **DCWGAN-GP training**: Wasserstein GAN with gradient penalty for enhanced stability
   
 
-## Features
+### Features
 
 - Synthetic EEG generator (20 channels)
 - Temporal and spatial correlation metrics
 - Explainable AI metrics
 
-## Installation
+### Installation
 
-### Prerequisites
+Prerequisites
 
 - Python 3.8+
 - CUDA-capable GPU (recommended)
 - 8GB+ RAM
 
-### Quick install
+Quick install
 
 1. Clone the repository:
 ```bash
@@ -43,8 +43,6 @@ pip install -r requirements.txt
 ```bash
 pip install -e .
 ```
-
-## Quick Start
 
 ### Usage
 
@@ -100,11 +98,11 @@ trainer = Trainer(generator, critic, config)
 trainer.train(data_loader.get_dataloader(), num_epochs=100)
 ```
 
-## Configuration
+### Configuration
 
 The training process is highly configurable through YAML files. Key configuration sections:
 
-### Model architecture
+#### Model architecture
 ```yaml
 model:
   generator:
@@ -117,7 +115,7 @@ model:
     use_PE: true
 ```
 
-### Training parameters
+#### Training parameters
 ```yaml
 training:
   num_epochs: 100
@@ -125,7 +123,7 @@ training:
   checkpoint_frequency: 50
 ```
 
-### Data processing
+#### Data processing
 ```yaml
 data:
   seq_len: 1536
@@ -139,7 +137,7 @@ data:
       bandpass: [1, 100]
 ```
 
-## Input data
+### Input data
 
 The system expects iEEG/ECoG data in the following format:
 
@@ -157,27 +155,27 @@ Example data structure:
 }
 ```
 
-## Architecture
+### Architecture
 
-### Generator
+#### Generator
 - **Input**: Latent vector (128D by default)
 - **Architecture**: Transposed convolutions with upsampling
 - **Attention**: Optional spatial attention with multiple variants
 - **Output**: Synthetic EEG signals
 
-### Critic
+#### Critic
 - **Input**: Real or synthetic iEEG signals
 - **Architecture**: Window-based processing with attention
 - **Attention**: Temporal and spatial attention mechanisms
 - **Output**: Realism score for each window
 
-### Attention mechanisms
+#### Attention mechanisms
 - **Spatial Attention**: Captures channel-wise relationships
 - **Temporal Attention**: Models time-dependent patterns
 - **Positional Encoding**: Learned position embeddings
 - **Conditional Attention**: Context-aware attention
 
-## Monitoring and visualization
+### Monitoring and visualization
 
 The training process includes comprehensive monitoring:
 
@@ -188,13 +186,13 @@ The training process includes comprehensive monitoring:
 - **Model Checkpoints**: Automatic model saving
 - **Explainable AI methods**: Saliency maps
 
-## Performance tips
+### Performance tips
 
 1. **GPU Memory**: Adjust batch size based on available GPU memory
 
-## Troubleshooting
+### Troubleshooting
 
-### Common issues
+Common issues
 
 1. **CUDA Out of Memory**:
    - Reduce batch size
@@ -211,7 +209,7 @@ The training process includes comprehensive monitoring:
    - Verify file paths in configuration
    - Ensure proper data preprocessing
 
-## Citation
+### Citation
 
 If you use this code in your research, please cite:
 
@@ -228,6 +226,6 @@ If you use this code in your research, please cite:
 
 ```
 
-## License
+### License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
