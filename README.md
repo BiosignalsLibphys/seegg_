@@ -221,7 +221,7 @@ If you use this code in your research, please cite:
   year         = {2025},
   url          = {https://github.com/BiosignalsLibphys/seege_},
   version      = {0.1.0},
-  note         = {License: MIT}
+  note         = {License: GNU LGPLv3}
 }
 
 
